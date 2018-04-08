@@ -1,27 +1,45 @@
-# Role Name
+# Logstash
 
-A brief description of the role goes here.
+Setup a logstash instance.
 
 
 ## Requirements
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here.
-For instance, if the role uses the EC2 module or depends on other Ansible roles, it may be a good idea to mention in this section that the boto package is required.
-
+An apt based linux system
 
 ## Role Variables
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role.
-Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 
-```yml
-```
+| Variable                | Default / Mandatory                                             | Description                                                                                                                                                                                                                                              |
+|-------------------------|-----------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `logstash_config`       | `{ path: { logs: /var/log/logstash, data: /var/lib/logstash }}` | Since the logstash settings file is a yaml file we write the whole object to the settings file. For more Information please see the [logstash settings file documentation](https://www.elastic.co/guide/en/logstash/current/logstash-settings-file.html) |
+| `logstash_config_files` | `{}`                                                            | Dictionary of config files to write to conf.d/. More information below.                                                                                                                                                                                  |
+
+### `logstash_config_files`
+Each entry in the `logstash_config_files` consits out of the following entries.
+| Variable | Default / Mandatory | Description                                           |
+|----------|---------------------|-------------------------------------------------------|
+| `name`   | :heavy_check_mark:  | Name of the config file. This value has to be unique. |
+| `input`  | :heavy_check_mark:  | Input definition of the config file.                  |
+| `filter` | `null`              | Filter definition of the config file.                 |
+| `output` | :heavy_check_mark:  | Output definition of the config file.                 |
 
 ## Example Playbook
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
 ```yml
+- hosts: all
+  become: true
+  vars:
+    logstash_config_files:
+      - name: syslog
+        input: |
+          file {
+            path => "/var/log/nginx/*.log"
+            }
+        output: |
+          elasticsearch {
+            hosts => ["elasticsearch.example.de"]
+          }
 ```
 
 ## License
@@ -31,4 +49,4 @@ This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 Inter
 
 ## Author Information
 
-- [Author Name (nickname)](github profile) _your-full-stuvus-email-address@stuvus.uni-stuttgart.de_
+- [Fritz Otlinghaus (Scriptkiddi)](https://github.com/scriptkiddi) _fritz.otlinghaus@stuvus.uni-stuttgart.de_

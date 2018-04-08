@@ -1,3 +1,42 @@
 ---
 
-...
+- name: Install required packages
+  become: yes
+  apt: 
+    name: "{{ item }}"
+  with_items:
+    - apt-utils
+    - apt-transport-https
+    - openjdk-8-jdk
+
+- name: Add Elasticsearch repository key
+  become: yes
+  apt_key: 
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+
+- name: Add logstash repository
+  become: yes
+  apt_repository: 
+    repo: deb https://artifacts.elastic.co/packages/6.x/apt stable main
+
+- name: Ensure logstash is installed
+  become: yes
+  apt: 
+    name: logstash
+
+- name: Place logstash settings file
+  copy:
+    content: "{{ logstash_config | to_nice_yaml }}"
+    dest: /etc/logstash/logstash.yml
+
+- name: Place logstash config_files
+  template:
+    src: config.conf.j2
+    dest: "/etc/logstash/conf.d/{{ item.name }}.conf"
+  with_items: "{{ logstash_config_files }}"
+
+- name: Enable logstash
+  systemd:
+    name: logstash
+    enabled: yes
+    state: started
