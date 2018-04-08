@@ -1,3 +1,4 @@
 logstash_config:
   path.logs: /var/log/logstash
   path.data: /var/lib/logstash
+logstash_config_file: {}
