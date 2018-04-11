@@ -1,13 +1,13 @@
 input {
-{{ item.input }}
+{{ item.value.input }}
 }
 
-{% if item.filter is defined %}
+{% if item.value.filter is defined %}
 filter {
-{{ item.filter }}
+{{ item.value.filter }}
 }
 {% endif %}
 
 output {
-{{ item.output }}
+{{ item.value.output }}
 }

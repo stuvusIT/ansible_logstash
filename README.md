@@ -9,17 +9,17 @@ An apt based linux system
 
 ## Role Variables
 
-
 | Variable                | Default / Mandatory                                             | Description                                                                                                                                                                                                                                              |
 |-------------------------|-----------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `logstash_config`       | `{ path: { logs: /var/log/logstash, data: /var/lib/logstash }}` | Since the logstash settings file is a yaml file we write the whole object to the settings file. For more Information please see the [logstash settings file documentation](https://www.elastic.co/guide/en/logstash/current/logstash-settings-file.html) |
 | `logstash_config_files` | `{}`                                                            | Dictionary of config files to write to conf.d/. More information below.                                                                                                                                                                                  |
 
 ### `logstash_config_files`
-Each entry in the `logstash_config_files` consits out of the following entries.
+Each entry in the `logstash_config_files` consists out of the following entries.
+The key of each entry has to be unique and will be used for the config file name.
+
 | Variable | Default / Mandatory | Description                                           |
 |----------|---------------------|-------------------------------------------------------|
-| `name`   | :heavy_check_mark:  | Name of the config file. This value has to be unique. |
 | `input`  | :heavy_check_mark:  | Input definition of the config file.                  |
 | `filter` | `null`              | Filter definition of the config file.                 |
 | `output` | :heavy_check_mark:  | Output definition of the config file.                 |
@@ -45,7 +45,6 @@ Each entry in the `logstash_config_files` consits out of the following entries.
 ## License
 
 This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).
-
 
 ## Author Information
 
