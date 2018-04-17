@@ -16,7 +16,6 @@ An apt based linux system
 
 ### `logstash_config_files`
 Each entry in the `logstash_config_files` consists out of the following entries.
-The key of each entry has to be unique and will be used for the config file name.
 
 | Variable | Default / Mandatory | Description                                           |
 |----------|---------------------|-------------------------------------------------------|
@@ -31,7 +30,7 @@ The key of each entry has to be unique and will be used for the config file name
   become: true
   vars:
     logstash_config_files:
-      - name: syslog
+	  syslog:
         input: |
           file {
             path => "/var/log/nginx/*.log"
