@@ -30,7 +30,7 @@ Each entry in the `logstash_config_files` consists out of the following entries.
   become: true
   vars:
     logstash_config_files:
-	  syslog:
+      syslog:
         input: |
           file {
             path => "/var/log/nginx/*.log"
