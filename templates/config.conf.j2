@@ -1,0 +1,13 @@
+input {
+{{ item.value.input }}
+}
+
+{% if item.value.filter is defined %}
+filter {
+{{ item.value.filter }}
+}
+{% endif %}
+
+output {
+{{ item.value.output }}
+}
