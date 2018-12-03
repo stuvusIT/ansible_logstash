@@ -1,11 +1,10 @@
 ---
 - name: Install required packages
-  apt: 
-    name: "{{ item }}"
-  with_items:
-    - apt-utils
-    - apt-transport-https
-    - openjdk-8-jdk
+  apt:
+    name:
+      - apt-utils
+      - apt-transport-https
+      - openjdk-8-jdk
 
 - name: Add Elasticsearch repository key
   apt_key: 
